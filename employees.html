@@ -1,6 +1,0 @@
-{% extends "base.html" %}
-{% block heading %}Employees{% endblock %}
-{% block content %}
-<section class="welcome-row"><div><span class="eyebrow">PEOPLE DIRECTORY</span><h2>Employee overview</h2><p class="muted">Performance indicators calculated from current task records.</p></div></section>
-<section class="section-card"><div class="table-wrap"><table><thead><tr><th>EMPLOYEE</th><th>DEPARTMENT</th><th>EMAIL</th><th>PERFORMANCE</th></tr></thead><tbody>{% for e in employees %}<tr><td><strong>{{ e.name }}</strong></td><td>{{ e.department }}</td><td>{{ e.email }}</td><td><div class="score-bar"><span style="width:{{ e.score }}%"></span></div><strong>{{ e.score }}/100</strong></td></tr>{% endfor %}</tbody></table></div></section>
-{% endblock %}
