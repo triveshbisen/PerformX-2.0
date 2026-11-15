@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block heading %}My dashboard{% endblock %}
+{% block content %}
+<section class="welcome-row"><div><span class="eyebrow">YOUR WORKSPACE</span><h2>Hello, {{ session.get('name').split(' ')[0] }} <span class="wave">✦</span></h2><p class="muted">Here’s a snapshot of your work and progress.</p></div><div class="date-chip">◷ &nbsp; {{ now_label if now_label else "Performance overview" }}</div></section>
+<section class="stats-grid">
+  <div class="stat-card"><div class="stat-top"><span>Assigned tasks</span><span class="stat-icon blue">▤</span></div><strong>{{ total }}</strong><small>Total tasks assigned to you</small></div>
+  <div class="stat-card"><div class="stat-top"><span>Completed</span><span class="stat-icon green">✓</span></div><strong>{{ completed }}</strong><small>Tasks marked complete</small></div>
+  <div class="stat-card"><div class="stat-top"><span>In progress / pending</span><span class="stat-icon amber">◷</span></div><strong>{{ pending }}</strong><small>Tasks still in your queue</small></div>
+  <div class="stat-card score-card"><div class="stat-top"><span>Performance score</span><span class="stat-icon purple">✧</span></div><strong>{{ score }}<small class="score-outof">/100</small></strong><small>Based on recorded task data</small></div>
+</section>
+<section class="section-card"><div class="section-heading"><div><h3>My tasks</h3><p class="muted">Keep your work status up to date.</p></div><span class="count-badge">{{ total }} tasks</span></div>
+  {% if tasks %}<div class="table-wrap"><table><thead><tr><th>TASK</th><th>DUE DATE</th><th>STATUS</th><th>QUALITY</th><th>UPDATE</th></tr></thead><tbody>
+  {% for task in tasks %}<tr><td><strong>{{ task.title }}</strong><small class="cell-sub">{{ task.description }}</small></td><td>{{ task.due_date }}</td><td><span class="status {{ task.status|lower|replace(' ','-') }}">{{ task.status }}</span></td><td>{% if task.quality_score %}{{ task.quality_score }}/5{% else %}<span class="muted">Not reviewed</span>{% endif %}</td><td><form method="post" action="{{ url_for('update_status',task_id=task.id) }}" class="inline-form"><select name="status" aria-label="Task status"><option {% if task.status=='Pending' %}selected{% endif %}>Pending</option><option {% if task.status=='In Progress' %}selected{% endif %}>In Progress</option><option {% if task.status=='Completed' %}selected{% endif %}>Completed</option></select><button class="btn small-btn" type="submit">Save</button></form></td></tr>{% endfor %}
+  </tbody></table></div>{% else %}<div class="empty-state"><span>▤</span><strong>No tasks yet</strong><p>Your manager's assigned tasks will appear here.</p></div>{% endif %}
+</section>
+<div class="note-card"><span>ⓘ</span><p><strong>How your score works</strong><br>Your demo score combines task completion (40%), manager-rated quality (40%) and on-time completion (20%). It is an illustrative indicator, not an automatic promotion decision.</p></div>
+{% endblock %}
