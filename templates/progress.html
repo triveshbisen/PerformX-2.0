@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block heading %}My progress{% endblock %}
+{% block content %}
+<section class="welcome-row"><div><span class="eyebrow">PERSONAL DEVELOPMENT</span><h2>Your progress, over time <span class="wave">✦</span></h2><p class="muted">A private view of your completed work and current performance indicator.</p></div><span class="role-chip">PERSONAL VIEW</span></section>
+<section class="stats-grid">
+<div class="stat-card"><div class="stat-top"><span>Current score</span><span class="stat-icon purple">✧</span></div><strong>{{ score }}<small class="score-outof">/100</small></strong><small>Based on all recorded tasks</small></div>
+<div class="stat-card"><div class="stat-top"><span>Completed this month</span><span class="stat-icon green">✓</span></div><strong>{{ completed_this_month }}</strong><small>Completion date recorded in this month</small></div>
+<div class="stat-card"><div class="stat-top"><span>Total completed</span><span class="stat-icon blue">▤</span></div><strong>{{ total_completed }}</strong><small>Across your PerformX history</small></div>
+</section>
+<section class="section-card"><div class="section-heading"><div><h3>Monthly activity</h3><p class="muted">Tasks assigned and completed, grouped by assignment month.</p></div></div>
+{% if months %}
+<div class="month-list">{% for m in months %}<div class="month-row"><div class="month-label">{{ m.label }}</div><div class="month-bars"><div class="month-bar"><span style="width:{{ (m.assigned / (m.assigned if m.assigned > 0 else 1) * 100) }}%"></span></div><small>{{ m.assigned }} assigned</small><div class="month-bar completed-bar"><span style="width:{{ (m.completed / (m.assigned if m.assigned > 0 else 1) * 100) }}%"></span></div><small>{{ m.completed }} completed</small></div></div>{% endfor %}</div>
+{% else %}<div class="empty-state"><strong>Your progress will appear here</strong><p>As tasks are assigned and completed, monthly activity will build up.</p></div>{% endif %}
+</section>
+<div class="note-card"><span>ⓘ</span><p><strong>Your data, your growth</strong><br>This page is visible only to you. Historical completion dates for tasks completed before this update use their original task creation date as an approximation.</p></div>
+{% endblock %}
