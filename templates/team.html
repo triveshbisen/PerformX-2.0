@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block heading %}Team performance{% endblock %}
+{% block content %}
+<section class="welcome-row"><div><span class="eyebrow">SHARED TEAM INSIGHTS</span><h2>Meet the team <span class="wave">✦</span></h2><p class="muted">Compare high-level task progress and celebrate improvement. Private manager feedback is not shown here.</p></div><span class="role-chip">TEAM VIEW</span></section>
+<section class="team-grid">
+{% for e in employees %}
+<article class="section-card person-card">
+  <div class="person-top"><div class="avatar large">{{ e.name[0] }}</div><div><strong>{{ e.name }}</strong><small>{{ e.department }}</small></div></div>
+  <div class="person-score"><strong>{{ e.score }}</strong><span>/100 performance indicator</span></div>
+  <div class="progress-track"><span style="width:{{ e.score }}%"></span></div>
+  <div class="person-stats"><span><b>{{ e.completed_tasks }}</b> completed</span><span><b>{{ e.total_tasks }}</b> assigned</span></div>
+</article>
+{% else %}<div class="empty-state">No employee records yet.</div>{% endfor %}
+</section>
+<div class="note-card"><span>ⓘ</span><p><strong>Respectful visibility</strong><br>This page shows aggregate task metrics only. Manager comments and individual review notes remain private to the employee and authorized reviewers.</p></div>
+{% endblock %}
